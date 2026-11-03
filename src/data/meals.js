@@ -21,15 +21,14 @@ function shuffle(array) {
 }
 
 export function getRandomMeals(
-  proteinId,
-  { count = 3, excludeIds = [], maxTime = null } = {}
-) {
-  let pool = getMealsByProtein(proteinId)
-  if (maxTime) pool = pool.filter((m) => m.timeMins <= maxTime)
-
-  const fresh = pool.filter((m) => !excludeIds.includes(m.id))
-  // If there aren't enough unseen meals left, fall back to the whole pool
-  const source = fresh.length >= count ? fresh : pool
-
-  return shuffle(source).slice(0, count)
-}
+    proteinId,
+    { count = 3, excludeIds = [], maxTime = null } = {}
+  ) {
+    let pool = getMealsByProtein(proteinId)
+    if (maxTime) pool = pool.filter((m) => m.timeMins <= maxTime)
+  
+    const fresh = shuffle(pool.filter((m) => !excludeIds.includes(m.id)))
+    const seen = shuffle(pool.filter((m) => excludeIds.includes(m.id)))
+  
+    return [...fresh, ...seen].slice(0, count)
+  }
