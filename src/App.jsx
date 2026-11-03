@@ -1,7 +1,20 @@
+import { proteins, getRandomMeals } from './data/meals'
+
 export default function App() {
+  const meals = getRandomMeals('yogurt')
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-600">Tailwind works</h1>
+    <div className="p-6">
+      <p className="mb-4 font-semibold">
+        {proteins.map((p) => p.label).join(', ')}
+      </p>
+      <ul className="list-disc pl-5">
+        {meals.map((m) => (
+          <li key={m.id}>
+            {m.name} ({m.timeMins} min)
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
