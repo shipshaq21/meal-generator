@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ProteinPicker from './components/ProteinPicker'
 import MealIdeas from './components/MealIdeas'
+import MealDetail from './components/MealDetail'
 import { proteins, getRandomMeals, getMealById } from './data/meals'
 
 export default function App() {
@@ -39,18 +40,7 @@ export default function App() {
       />
     )
   } else {
-    // Placeholder until the detail screen is built
-    screen = (
-      <main className="mx-auto max-w-md p-6">
-        <button
-          onClick={() => setMealId(null)}
-          className="text-sm text-gray-600 underline"
-        >
-          ← Back to ideas
-        </button>
-        <h1 className="mt-4 text-2xl font-bold">{meal.name}</h1>
-      </main>
-    )
+    screen = <MealDetail meal={meal} onBack={() => setMealId(null)} />
   }
 
   return <div className="min-h-screen bg-gray-50 text-gray-900">{screen}</div>
