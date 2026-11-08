@@ -2,23 +2,39 @@ import { useState } from 'react'
 import ProteinPicker from './components/ProteinPicker'
 import MealIdeas from './components/MealIdeas'
 import MealDetail from './components/MealDetail'
-import { proteins, getRandomMeals, getMealById } from './data/meals'
+import {
+  proteins,
+  getRandomMeals,
+  getMealById,
+  countMeals,
+} from './data/meals'
 
 export default function App() {
   const [protein, setProtein] = useState(null)
   const [ideas, setIdeas] = useState([])
   const [mealId, setMealId] = useState(null)
+  const [maxTime, setMaxTime] = useState(null)
 
   const proteinLabel = proteins.find((p) => p.id === protein)?.label
   const meal = mealId ? getMealById(mealId) : null
 
   function pickProtein(id) {
     setProtein(id)
-    setIdeas(getRandomMeals(id))
+    setIdeas(getRandomMeals(id, { maxTime }))
+  }
+
+  function changeTime(value) {
+    setMaxTime(value)
+    setIdeas(getRandomMeals(protein, { maxTime: value }))
   }
 
   function shuffleIdeas() {
-    setIdeas(getRandomMeals(protein, { excludeIds: ideas.map((m) => m.id) }))
+    setIdeas(
+      getRandomMeals(protein, {
+        maxTime,
+        excludeIds: ideas.map((m) => m.id),
+      })
+    )
   }
 
   function backToProteins() {
@@ -34,6 +50,9 @@ export default function App() {
       <MealIdeas
         proteinLabel={proteinLabel}
         meals={ideas}
+        maxTime={maxTime}
+        canShuffle={countMeals(protein, maxTime) > ideas.length}
+        onTimeChange={changeTime}
         onShuffle={shuffleIdeas}
         onSelect={setMealId}
         onBack={backToProteins}

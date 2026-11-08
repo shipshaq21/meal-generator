@@ -13,9 +13,9 @@ const EMOJI = {
 export default function ProteinPicker({ onSelect }) {
   return (
     <main className="mx-auto max-w-md p-6">
-      <h1 className="text-2xl font-bold">What are you cooking with?</h1>
+      <h1 className="text-2xl font-bold">What would you like to cook today?</h1>
       <p className="mt-1 text-gray-600">
-        Pick a protein and we'll suggest easy meals.
+        Pick a protein and select from a number of meals!
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-3">

@@ -1,6 +1,15 @@
-export default function MealIdeas({
+const TIME_OPTIONS = [
+    { label: 'Any time', value: null },
+    { label: '20 min or less', value: 20 },
+    { label: '40 min or less', value: 40 },
+  ]
+  
+  export default function MealIdeas({
     proteinLabel,
     meals,
+    maxTime,
+    canShuffle,
+    onTimeChange,
     onShuffle,
     onSelect,
     onBack,
@@ -13,9 +22,26 @@ export default function MealIdeas({
   
         <h1 className="mt-4 text-2xl font-bold">{proteinLabel} ideas</h1>
   
+        <div className="mt-4 flex flex-wrap gap-2">
+          {TIME_OPTIONS.map((opt) => (
+            <button
+              key={opt.label}
+              onClick={() => onTimeChange(opt.value)}
+              className={`rounded-full border px-3 py-1.5 text-sm transition ${
+                maxTime === opt.value
+                  ? 'border-gray-900 bg-gray-900 text-white'
+                  : 'border-gray-300 bg-white text-gray-700'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+  
         {meals.length === 0 ? (
-          <p className="mt-6 text-gray-600">
-            No meals found for this one yet.
+          <p className="mt-6 rounded-xl bg-white p-4 text-gray-600 shadow-sm">
+            No {proteinLabel.toLowerCase()} meals in {maxTime} minutes or less.
+            Try a longer time to see more ideas.
           </p>
         ) : (
           <>
@@ -41,12 +67,14 @@ export default function MealIdeas({
               ))}
             </ul>
   
-            <button
-              onClick={onShuffle}
-              className="mt-6 w-full rounded-2xl bg-gray-900 py-3 font-medium text-white transition active:scale-95"
-            >
-              Show me different ones
-            </button>
+            {canShuffle && (
+              <button
+                onClick={onShuffle}
+                className="mt-6 w-full rounded-2xl bg-gray-900 py-3 font-medium text-white transition active:scale-95"
+              >
+                Show me different ones
+              </button>
+            )}
           </>
         )}
       </main>

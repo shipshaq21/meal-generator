@@ -32,3 +32,9 @@ export function getRandomMeals(
   
     return [...fresh, ...seen].slice(0, count)
   }
+
+  export function countMeals(proteinId, maxTime = null) {
+    return getMealsByProtein(proteinId).filter(
+      (m) => !maxTime || m.timeMins <= maxTime
+    ).length
+  }
