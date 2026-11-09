@@ -8,7 +8,7 @@ export default function MealDetail({ meal, onBack }) {
 
   return (
     <main className="mx-auto max-w-md p-6 pb-12">
-      <button onClick={onBack} className="text-sm text-gray-600 underline">
+      <button onClick={onBack} className="py-2 text-sm text-gray-600 underline">
         ← Back to ideas
       </button>
 

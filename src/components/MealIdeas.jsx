@@ -16,7 +16,7 @@ const TIME_OPTIONS = [
   }) {
     return (
       <main className="mx-auto max-w-md p-6">
-        <button onClick={onBack} className="text-sm text-gray-600 underline">
+        <button onClick={onBack} className="py-2 text-sm text-gray-600 underline">
           ← Change protein
         </button>
   
